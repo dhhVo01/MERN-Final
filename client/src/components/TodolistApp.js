@@ -33,7 +33,7 @@ function App() {
   return (
     <div className="container">
       <div className="heading">
-        <h1>To-Do List</h1>
+        <h1>トドリスト</h1>
       </div>
       <div className="form">
         <input type="text" 
@@ -41,7 +41,7 @@ function App() {
                 onChange={handleChange}
         />
         <button onClick={saveItem}>
-          <span>Add</span>
+          <span>追加</span>
         </button>
       </div>
       <div>
