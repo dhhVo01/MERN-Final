@@ -14,21 +14,21 @@ function App() {
         const data = {
             value: item
         }
-        addItem(data).then(res => {
-            console.log(res.data) ;
-        }).catch(e => console.log(e))
-        setValueItem("");
+        if (data.value !== "")
+        {
+            addItem(data).then(res => {console.log(res.data)}).catch(e => console.log(e));
+            setValueItem("");
+        }
     }
 
     function delItem(itemId){
-      deleteItem(itemId).then(res => {
-        console.log(res.data) ;
-    }).catch(e => console.log(e))
+      deleteItem(itemId).then(res => {console.log(res.data)}).catch(e => console.log(e));
     }
 
     useEffect(() => {
-        getAllItem().then(res => {setListItem(res.data)});
-      }, [listItem]);
+      getAllItem().then(res => {setListItem(res.data)})},
+      [listItem]
+    );
       
   return (
     <div className="container">
