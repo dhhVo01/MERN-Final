@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { addItem, getAllItem, deleteItem } from "../services/todolist.service.js";
+import ToDoItem from "./ToDoItem.js";
 
 function App() {
     const [item, setValueItem] = useState("");
@@ -13,41 +14,46 @@ function App() {
         const data = {
             value: item
         }
-        addItem(data).then(res => {
-            console.log(res.data) ;
-        }).catch(e => console.log(e))
-        setValueItem("");
+        if (data.value !== "")
+        {
+            addItem(data).then(res => {console.log(res.data)}).catch(e => console.log(e));
+            setValueItem("");
+        }
     }
 
-    function delItem(e){
-      const itemId = e.target.id;
-      deleteItem(itemId).then(res => {
-        console.log(res.data) ;
-    }).catch(e => console.log(e))
+    function delItem(itemId){
+      deleteItem(itemId).then(res => {console.log(res.data)}).catch(e => console.log(e));
     }
 
     useEffect(() => {
-        getAllItem().then(res => {setListItem(res.data)});
-      }, [listItem]);
+      getAllItem().then(res => {setListItem(res.data)})},
+      [listItem]
+    );
       
   return (
     <div className="container">
       <div className="heading">
-        <h1>To-Do List</h1>
+        <h1>トドリスト</h1>
       </div>
       <div className="form">
         <input type="text" 
-                name="item"
                 value={item}
                 onChange={handleChange}
         />
         <button onClick={saveItem}>
-          <span>Add</span>
+          <span>追加</span>
         </button>
       </div>
       <div>
         <ul>
-        {listItem.map(Item => (<li id={Item._id} onClick={delItem}>{Item.value}</li>))}
+        {listItem.map((Item, key) => (
+          <ToDoItem 
+            key={key}
+            id={Item._id}
+            onChecked={delItem}
+            text={Item.value}
+          />
+        ))}
         </ul>
       </div>
     </div>
